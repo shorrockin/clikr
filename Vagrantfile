@@ -14,6 +14,8 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--memory", "2056"]
   end
 
+  config.vm.network "private_network", ip: "192.168.50.4"
+
   # web port we use to access things
   config.vm.network "forwarded_port", guest: 8080, host: 8080, auto_correct: false
 
