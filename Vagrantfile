@@ -19,4 +19,7 @@ Vagrant.configure("2") do |config|
 
   # run this script to set things up. 
   config.vm.provision "shell", path: "provision/setup.sh"
+
+  # mount this project's 'tmp' folder into the vagrant instance as osx
+  config.vm.synced_folder "tmp", "/home/vagrant/tmp", :nfs => true
 end
