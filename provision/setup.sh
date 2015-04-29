@@ -15,3 +15,4 @@ chmod +x /usr/local/bin/docker-compose
 echo "Cloning the clikr repo"
 ssh-keyscan github.com >> ~/.ssh/known_hosts
 git clone git@github.com:shorrockin/clikr.git
+sudo chown vagrant:vagrant -R clikr
