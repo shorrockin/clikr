@@ -1,0 +1,46 @@
+{
+  "name": "clikr",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim",
+      "coffeeify"
+    ]
+  },
+  "browserify-shim": {
+    "plugin": {
+      "exports": "plugin",
+      "depends": [
+        "jquery:$"
+      ]
+    }
+  },
+  "devDependencies": {
+    "browser-sync": "^0.9.1",
+    "browserify": "^4.1.8",
+    "browserify-shim": "^3.5.0",
+    "coffee-script": "^1.7.1",
+    "coffeeify": "^0.6.0",
+    "envify": "^1.2.1",
+    "gulp": "^3.7.0",
+    "gulp-changed": "^0.4.0",
+    "gulp-coffee": "^2.0.0",
+    "gulp-less": "^1.2.3",
+    "gulp-notify": "^1.3.1",
+    "gulp-plumber": "^0.6.2",
+    "gulp-shell": "^0.2.5",
+    "gulp-sym": "0.0.13",
+    "gulp-util": "^2.2.16",
+    "node-notifier": "^3.0.3",
+    "react": "^0.10.0",
+    "through2": "^0.5.1",
+    "vinyl-source-stream": "^0.1.1",
+    "watchify": "^0.10.2"
+  },
+  "dependencies": {
+    "jquery": "^2.1.1",
+    "superagent": "^0.18.0"
+  }
+}
