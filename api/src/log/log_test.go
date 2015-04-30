@@ -3,7 +3,7 @@ package log
 import "testing"
 
 func TestLogging(t *testing.T) {
-	Debug("this is a debug message")
+	Debug("this is a debug message!!")
 	Info("this is a info message")
 	Warn("this is a warning message")
 	Error("this is a panic message")
