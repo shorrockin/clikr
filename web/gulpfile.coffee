@@ -14,6 +14,7 @@ gulp.task "watch", ["default"], () ->
   sync  {
     server: { baseDir: "/opt/www" }
     files: [ "/opt/www/**" ]
+    ui: false # doesn't work when we're accessing through forwarded ports
   }
   gulp.watch "/opt/src/coffee/**/*.coffee", ['js']
   gulp.watch "/opt/src/less/**/*.less",     ['css']

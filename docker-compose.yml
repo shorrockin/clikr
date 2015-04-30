@@ -8,7 +8,6 @@ web:
     - api:api
   ports:
     - 8080:3000 # for nginx use 8080:80, this is for browser-sync proxy
-    - 8181:3001 # only for browser-sync ui port
 
 api:
   build: ./api

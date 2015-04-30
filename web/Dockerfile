@@ -38,8 +38,6 @@ VOLUME /opt/src
 # Define default command.
 CMD ["nginx"]
 
-# Expose ports.
+# exposes the nginx and browser-sync ports
 EXPOSE 80   
 EXPOSE 3000 
-EXPOSE 3001 
-
