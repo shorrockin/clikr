@@ -17,7 +17,9 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip: "192.168.50.4"
 
   # web port we use to access things
-  config.vm.network "forwarded_port", guest: 8080, host: 8080, auto_correct: false
+  config.vm.network "forwarded_port", guest: 8080, host: 8080, auto_correct: false # web
+  config.vm.network "forwarded_port", guest: 8181, host: 8181, auto_correct: false # browser-sync ui
+  config.vm.network "forwarded_port", guest: 9090, host: 9090, auto_correct: false # go-convey test server
 
   # run this script to set things up. 
   config.vm.provision "shell", path: "provision/setup.sh"
