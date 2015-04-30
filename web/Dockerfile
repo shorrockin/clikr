@@ -12,26 +12,34 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
-RUN mkdir /web
-
 RUN npm install gulp -g
 
-# create and build all the codes
-WORKDIR /web
+RUN mkdir -p /opt/build
+RUN mkdir -p /opt/www
+RUN mkdir -p /opt/src
 
 # do this first so that our cache isn't invalidated when other files change
-ADD package.json /web/package.json
-RUN npm install
+ADD package.json /opt/build/package.json
+RUN cd /opt/build && npm install
+ADD gulpfile.js /opt/build/gulpfile.js
+ADD gulpfile.coffee /opt/build/gulpfile.coffee
 
-ADD . /web
+ADD src /opt/src
+RUN ln -s /opt/src/html/index.html /opt/www/index.html
 
-RUN gulp
+WORKDIR /opt/build
+
+RUN gulp --production
 
 ADD nginx.conf /etc/nginx/sites-available/default
+
+VOLUME /opt/src
 
 # Define default command.
 CMD ["nginx"]
 
 # Expose ports.
-EXPOSE 80
+EXPOSE 80   
+EXPOSE 3000 
+EXPOSE 3001 
 

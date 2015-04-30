@@ -1,6 +1,9 @@
 web:
   build: ./web
+  command: /opt/build/node_modules/.bin/gulp watch
+  working_dir: /opt/build
   volumes:
-    - ./web/src:./web/src
+    - ./web/src:/opt/src
   ports:
-    - 8080:80
+    - 8080:3000 # for nginx use 8080:80, this is for browser-sync proxy
+    - 8181:3001 # only for browser-sync ui port
