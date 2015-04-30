@@ -4,6 +4,16 @@ web:
   working_dir: /opt/build
   volumes:
     - ./web/src:/opt/src
+  links:
+    - api:api
   ports:
     - 8080:3000 # for nginx use 8080:80, this is for browser-sync proxy
     - 8181:3001 # only for browser-sync ui port
+
+api:
+  build: ./api
+  command: rerun github.com/shorrockin/clikr
+  volumes:
+    - ./api/src:/gopath/src/github.com/shorrockin/clikr
+  ports:
+    - 3000:3000

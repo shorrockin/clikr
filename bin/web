@@ -1,2 +1,2 @@
 #!/bin/bash
-docker run --rm -p=8080:80 clikr_web
+docker run --rm -p=8080:80 --name web --link api:api clikr_web
