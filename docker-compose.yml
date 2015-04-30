@@ -17,3 +17,12 @@ api:
     - ./api/src:/gopath/src/github.com/shorrockin/clikr
   ports:
     - 3000:3000
+
+# go convey tests commented out, not quite working - scans everything
+# and eventually crashes. this can't be how it's expected to work?
+#test:
+#  build: ./test
+#  volumes:
+#    - ./api/src:/gopath/src/github.com/shorrockin/clikr
+#  ports:
+#    - 9090:8080
