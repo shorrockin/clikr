@@ -1,4 +1,5 @@
 'use strict';
+
 gulp       = require 'gulp'
 gp         = (require 'gulp-load-plugins') lazy: false
 path       = require 'path'
@@ -8,7 +9,8 @@ less       = require 'gulp-less'
 sync       = require 'browser-sync'
 argv       = require('yargs').argv
 
-gulp.task "default", ["css", "js"]
+
+gulp.task "default", ["css", "js", "images"]
 
 gulp.task "watch", ["default"], () ->
   sync  {
@@ -18,6 +20,7 @@ gulp.task "watch", ["default"], () ->
   }
   gulp.watch "/opt/src/coffee/**/*.coffee", ['js']
   gulp.watch "/opt/src/less/**/*.less",     ['css']
+  gulp.watch "/opt/src/images/**/*.png",    ['images']
 
 
 gulp.task "js", () ->
@@ -40,3 +43,8 @@ gulp.task "css", () ->
     .pipe gp.cssmin keepSpecialComments: 0
     .pipe gp.autoprefixer 'last 1 version'
     .pipe gulp.dest '/opt/www/css'
+
+
+gulp.task "images", () ->
+  gulp.src('/opt/src/images/**/*')
+    .pipe(gulp.dest('/opt/www/images'));

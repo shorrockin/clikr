@@ -62,5 +62,9 @@ The api server (found in _/api_) is a simple go based server responding to a var
 
 The following lists the concessions made on this tech demo:
 
-* Multiple cliks on an object will register multiple points of interest. This makes testing easier, however, would likely not be somethingy ou wanted in reality. 
-* The build/watch cycle is brittle and the gulp subsystem will exit on errors.
+1. Multiple cliks on an object will register multiple points of interest. This makes testing easier, however, would likely not be somethingy ou wanted in reality. 
+1. The build/watch cycle is brittle and the gulp subsystem will exit on errors.
+1. CSS not written to be responsive. Once window width is reduced below a certain amount things will fall apart.
+1. Docker container `test` is built from the `api` container, as such, any changes in `api` container will cause that container to be rebuilt - sometimes unecessarily.
+1. Images should probably be minified in gulp build, instead just used image optim manually.
+1. Scene scrubber should show a preview of scene's as you scrub through them. 
