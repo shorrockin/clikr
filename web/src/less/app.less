@@ -3,7 +3,10 @@
 @light-grey: lighten(@black-ish, 60%);
 
 @side-border: 10%;
-@control-height: 20px;
+@control-height: 16px;
+
+@image-width: 640px;
+@image-height: 360px;
 
 .background-gradiant(@background, @from, @to) {
     background: @background;                         /* fall back for anything else */
@@ -18,6 +21,13 @@ body {
     color: @black-ish;
 }
 
+header h1, section {
+    margin-left: auto;
+    margin-right: auto;
+    width: @image-width;
+    display: block;
+}
+
 
 header {
     border-bottom: 1px @light-grey solid;
@@ -25,38 +35,126 @@ header {
 
     h1 {
         color: @light-grey;
-        margin: 1em @side-border 1em @side-border;
+        margin-top: 1em;
+        margin-bottom: 1em;
         font-weight: normal;
         font-size: 1em;
     }
 }
 
+section.breadcrumbs {
+    margin-bottom: 1em;
+
+    span {
+        font-size: 0.8em;
+
+        a {
+            text-decoration: none; 
+            color: inherit;
+        }
+
+        a:hover {
+            color: darken(@light-grey, 40%);
+        }
+    }
+
+    span:not(:last-child) {
+        color: @light-grey;
+    }
+
+    span:last-child {
+        color: darken(@light-grey, 20%);
+    }
+
+    span:not(:last-child)::after {
+        content: " >"
+    }
+}
+
 
 section.scene {
-    margin: 0 @side-border 0 @side-border;  
     text-align: center;
+    position: relative;
    
     img {
+        border-top-left-radius: 0.25em;
+        border-top-right-radius: 0.25em;
     }
 
     div.scrubber {
-        width: 640px; /* matches image width */
+        width: @image-width; /* matches image width */
         height: @control-height;
-        background: black;
+        background: lighten(black, 10%);
         margin: auto;
         position: relative;
+        border-bottom-left-radius: 0.25em;
+        border-bottom-right-radius: 0.25em;
 
         div.control {
             width: @control-height;
             height: 100%;
             .background-gradiant(@grey, @grey, darken(@grey, 20%));
-            border: 1px @grey solid;
+            border: 2px @black-ish solid;
             position: absolute;
             cursor: ew-resize;
             border-radius: @control-height;
             box-shadow: 0px 0px 2px black;
-            top: -2px; /* accounts for border width */
-            left: 100px;
+            top: -3px; /* accounts for border width */
+            left: 30px;
+        }
+
+        div.control::after {
+            content: "";
+            width: @control-height / 2;
+            background: lighten(@black-ish, 5%);
+            height: @control-height / 2;
+            border-radius: @control-height / 2;
+            top: (@control-height / 2) - (@control-height / 4);
+            left: (@control-height / 2) - (@control-height / 4);
+            display: block;
+            position: relative;
         }
     }
+
+    div.interactions {
+        position: absolute;
+        width: 640;
+        top: 0px;
+        left: 0px;
+
+        div {
+            position: absolute;
+            border: 2px yellow solid;
+            transition: all .2s ease-in-out;
+
+            .interaction-element(@size) {
+                width: @size;
+                height: @size;
+                border-radius: @size;
+            }
+
+            &.small {
+                .interaction-element(10px);
+            }
+            
+            &.medium {
+                .interaction-element(15px);
+            }
+            
+            &.large {
+                .interaction-element(20px);
+            }
+        }
+
+        div:hover {
+            transform: scale(1.3); 
+        }
+    }
+}
+
+
+@-webkit-keyframes pulsate {
+    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+    50% {opacity: 1.0;}
+    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
 }
