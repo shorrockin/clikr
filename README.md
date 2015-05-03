@@ -46,7 +46,7 @@ This section outlines some high level decisions made about how things run, are s
 The api server (found in _/api_) is a simple go based server responding to a variety of requests and serving back the data over JSON. The following outlines the URLs currently supported by this sample app:
 
 
-| **Name** | Get Scene Info |
+| **Name** | Get Episode Info |
 |------------:|:-----|
 | **Method** | GET |
 | **URL** | `/series/[series_slug]/season/[season_num]/episode/[episode_num]` |
