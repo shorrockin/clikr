@@ -9,18 +9,23 @@ class SceneStore extends ReactStore
         when "episode-loaded"
           dispatcher.waitFor([episodeStore.dispatchToken])
           @frame = 0
+          @scene = @_scene()
+          @time  = @_time()
           @changed()
         when "visit-frame"
+          return unless payload.frame != @frame
           @frame = payload.frame
+          @scene = @_scene()
+          @time  = @_time()
           @changed()
 
-  image: () ->
+  _scene: () ->
     out = null
     for scene in episodeStore.episode.scenes
-      out = scene.image if (@frame > scene.frame or out == null)
+      out = scene if (@frame > scene.frame or out == null)
     out
 
-  time: () ->
+  _time: () ->
     seconds = (@frame / episodeStore.episode.fps)
     minutes = parseInt(seconds / 60)
     seconds = seconds - (minutes * 60)

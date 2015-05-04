@@ -1,9 +1,32 @@
-React = require "react"
+React        = require "react"
+episodeStore = require "../stores/episodeStore"
+sceneStore   = require "../stores/sceneStore"
 
 module.exports = React.createClass
+  getInitialState: () ->
+    { interactions: null }
+
+  componentDidMount: () ->
+    sceneStore.addChangeListener(@onSceneChanged)
+
+  componentDidUnmount: () ->
+    sceneStore.removeChangeListener(@onSceneChanged)
+
+  onSceneChanged: () ->
+    @setState { interactions: sceneStore.scene?.interactions }
+
   render: () ->
-    <div className="interactions">
-      <div className="small" style={{left: "300px", top: "320px"}}></div>
-      <div className="medium" style={{left: "50px", top: "75px"}}></div>
-      <div className="large" style={{left: "530px", top: "300px"}}></div>
-    </div>
+    if @state.interactions?
+      interactions = @state.interactions.map (interaction) ->
+        size = switch interaction.size
+          when 1 then "small"
+          when 2 then "medium"
+          else "large"
+
+        <div className={size} style={{left: "#{interaction.x}px", top: "#{interaction.y}px" }}></div>
+
+      <div className="interactions">
+        {interactions}
+      </div>
+    else
+      <div className="interactions"/>

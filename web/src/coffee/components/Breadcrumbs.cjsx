@@ -13,7 +13,7 @@ module.exports = React.createClass
     sceneStore.removeChangeListener(@onSceneChanged)
 
   onSceneChanged: () ->
-    @setState { episode: episodeStore.episode, time: sceneStore.time() }
+    @setState { episode: episodeStore.episode, time: sceneStore.time }
 
   render: () ->
     if @state.episode?

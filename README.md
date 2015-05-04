@@ -69,3 +69,4 @@ The following lists the concessions made on this tech demo:
 1. Images should probably be minified in gulp build, instead just used image optim manually.
 1. Scene scrubber should show a preview of scene's as you scrub through them. 
 1. Scene scrubber should be better about tracking drag events, currently they are cancelled as soon as you leave the scrubbing area.
+1. Images should be pre-loaded on boot. 

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/shorrockin/clikr/log"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
@@ -19,8 +20,8 @@ func TestEpisodeInfo(t *testing.T) {
 	})
 
 	Convey("should be able to render the episode info as json", t, func() {
-		// info := RetrieveEpisodeInfo(nil).(EpisodeInfo)
-		info := EpisodeInfo{Slug: "new_girl"}
+		info := RetrieveEpisodeInfo(nil).(EpisodeInfo)
+		//info := EpisodeInfo{Slug: "new_girl"}
 		So(info, ShouldNotBeNil)
 		So(info.Slug, ShouldEqual, "new_girl")
 
@@ -34,5 +35,17 @@ func TestEpisodeInfo(t *testing.T) {
 		So(err, ShouldBeNil)
 		So(unmarshelled, ShouldNotBeNil)
 		So(unmarshelled.Slug, ShouldEqual, info.Slug)
+	})
+
+	Convey("should be able to generate random interafction info", t, func() {
+		info := createInteractions(100)
+		log.Debug("created %v", info)
+
+		// since we pass in seeded values here we can assert exact results
+		So(len(info), ShouldEqual, 4)
+		So(info[0].ObjectID, ShouldEqual, 68)
+		So(info[0].PositionX, ShouldEqual, 320)
+		So(info[1].PositionY, ShouldEqual, 159)
+		So(info[1].Size, ShouldEqual, 1)
 	})
 }

@@ -13,7 +13,7 @@ module.exports = React.createClass
     sceneStore.removeChangeListener(@onSceneChanged)
 
   onSceneChanged: () ->
-    @setState { image: sceneStore.image() }
+    @setState { image: sceneStore.scene?.image }
 
   render: () ->
     if @state.image?
