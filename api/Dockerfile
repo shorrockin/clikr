@@ -2,6 +2,7 @@ FROM google/golang
 
 RUN go get github.com/gorilla/mux
 RUN go get github.com/skelterjohn/rerun
+RUN go get github.com/smartystreets/goconvey
 
 RUN mkdir -p /gopath/src/github.com/shorrockin/clikr
 ADD ./src /gopath/src/github.com/shorrockin/clikr

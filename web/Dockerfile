@@ -51,6 +51,7 @@ RUN npm install gulp-sourcemaps@^1.5.2
 RUN npm install vinyl-buffer@^1.0.0
 RUN npm install gulp-uglify@^1.2.0
 RUN npm install coffee-reactify@^3.0.0
+RUN npm install object-assign@^2.0.0
 
 # install the gulp files needed to run all our gulp commands
 ADD gulpfile.js /opt/build/gulpfile.js
