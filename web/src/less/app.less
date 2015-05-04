@@ -45,7 +45,7 @@ header {
 section.breadcrumbs {
     margin-bottom: 1em;
 
-    span {
+    >span {
         font-size: 0.8em;
 
         a {
@@ -58,15 +58,15 @@ section.breadcrumbs {
         }
     }
 
-    span:not(:last-child) {
+    >span:not(:last-child) {
         color: @light-grey;
     }
 
-    span:last-child {
+    >span:last-child {
         color: darken(@light-grey, 20%);
     }
 
-    span:not(:last-child)::after {
+    >span:not(:last-child)::after {
         content: " >"
     }
 }
@@ -76,9 +76,13 @@ section.scene {
     text-align: center;
     position: relative;
    
-    img {
+    img, div.img {
         border-top-left-radius: 0.25em;
         border-top-right-radius: 0.25em;
+        user-select: none;
+        width: @image-width;
+        height: @image-height;
+        background: @light-grey;
     }
 
     div.scrubber {
@@ -100,7 +104,9 @@ section.scene {
             border-radius: @control-height;
             box-shadow: 0px 0px 2px black;
             top: -3px; /* accounts for border width */
-            left: 30px;
+            left: 0px;
+            pointer-events: none;
+            user-select: none;
         }
 
         div.control::after {

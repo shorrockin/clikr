@@ -1,4 +1,4 @@
-console.log "booting clikr"
+console.log "[clikr] booting"
 
 React      = require "react"
 Clikr      = require "./components/Clikr"

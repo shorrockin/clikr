@@ -1,10 +1,27 @@
-React = require "react"
+React        = require "react"
+episodeStore = require "../stores/episodeStore"
+sceneStore   = require "../stores/sceneStore"
 
 module.exports = React.createClass
+  getInitialState: () ->
+    { episode: null, time: 0 }
+
+  componentDidMount: () ->
+    sceneStore.addChangeListener(@onSceneChanged)
+
+  componentDidUnmount: () ->
+    sceneStore.removeChangeListener(@onSceneChanged)
+
+  onSceneChanged: () ->
+    @setState { episode: episodeStore.episode, time: sceneStore.time() }
+
   render: () ->
-    <section className="breadcrumbs">
-      <span><a href="#">New Girl</a></span>
-      <span><a href="#">Season 4</a></span>
-      <span><a href="#">Episode 21</a></span>
-      <span><a href="#">Scene (4:13)</a></span>
-    </section>
+    if @state.episode?
+      <section className="breadcrumbs">
+        <span><a href="#">{@state.episode.name}</a></span>
+        <span><a href="#">Season {@state.episode.season}</a></span>
+        <span><a href="#">Episode {@state.episode.episode}</a></span>
+        <span><a href="#">Scene ({@state.time})</a></span>
+      </section>
+    else
+      <section className="breadcrumbs" />

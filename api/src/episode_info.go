@@ -4,6 +4,7 @@ import "github.com/shorrockin/clikr/log"
 
 type EpisodeInfo struct {
 	Slug    string      `json:"slug"`
+	Name    string      `json:"name"`
 	Season  uint        `json:"season"`
 	Episode uint        `json:"episode"`
 	FPS     uint        `json:"fps"`
@@ -11,7 +12,7 @@ type EpisodeInfo struct {
 }
 
 type SceneInfo struct {
-	Image string `json:"json"`
+	Image string `json:"image"`
 	Frame uint   `json:"frame"`
 }
 
@@ -20,6 +21,7 @@ func RetrieveEpisodeInfo(variables map[string]string) interface{} {
 
 	return EpisodeInfo{
 		Slug:    "new_girl",
+		Name:    "New Girl",
 		Episode: 21,
 		Season:  4,
 		FPS:     24,

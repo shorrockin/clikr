@@ -1,8 +1,8 @@
-React       = require "react"
-Breadcrumbs = require "./Breadcrumbs"
-Scene       = require "./Scene"
-dispatcher  = require "../dispatcher"
-actions     = require "../actions"
+React        = require "react"
+Breadcrumbs  = require "./Breadcrumbs"
+Scene        = require "./Scene"
+dispatcher   = require "../dispatcher"
+actions      = require "../actions"
 
 module.exports = React.createClass
   getInitialState: () ->
