@@ -1,6 +1,6 @@
-console.log "booting clikr clikr"
+console.log "booting clikr"
 
 React = require "react"
-Clikr = require "./components/clikr"
+Clikr = require "./components/Clikr"
 
-React.renderComponent Clikr(null), document.getElementById("body")
+React.render React.createElement(Clikr, {}), document.getElementById("container")

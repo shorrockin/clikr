@@ -47,6 +47,10 @@ RUN npm install react@^0.13.2
 RUN npm install flux@^2.0.3
 RUN npm install jquery@^2.1.4
 RUN npm install superagent@^1.2.0
+RUN npm install gulp-sourcemaps@^1.5.2
+RUN npm install vinyl-buffer@^1.0.0
+RUN npm install gulp-uglify@^1.2.0
+RUN npm install coffee-reactify@^3.0.0
 
 # install the gulp files needed to run all our gulp commands
 ADD gulpfile.js /opt/build/gulpfile.js

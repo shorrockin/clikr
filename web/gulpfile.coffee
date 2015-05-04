@@ -1,14 +1,18 @@
 'use strict';
 
 gulp         = require 'gulp'
+gutil        = require 'gulp-util'
 path         = require 'path'
 plumber      = require 'gulp-plumber'
 browserify   = require 'browserify'
 source       = require 'vinyl-source-stream'
+buffer       = require 'vinyl-buffer'
 less         = require 'gulp-less'
 sync         = require 'browser-sync'
 cssmin       = require 'gulp-cssmin'
 autoprefixer = require 'gulp-autoprefixer'
+sourcemaps   = require 'gulp-sourcemaps'
+uglify       = require 'gulp-uglify'
 argv         = require('yargs').argv
 
 
@@ -20,22 +24,26 @@ gulp.task "watch", ["default"], () ->
     files: [ "/opt/www/**" ]
     ui: false # doesn't work when we're accessing through forwarded ports
   }
-  gulp.watch "/opt/src/coffee/**/*.coffee", ['js']
+  gulp.watch "/opt/src/coffee/**/*",        ['js']
   gulp.watch "/opt/src/less/**/*.less",     ['css']
   gulp.watch "/opt/src/images/**/*.png",    ['images']
 
 
 gulp.task "js", () ->
-  browserify
+  b = browserify
     entries: ["/opt/src/coffee/app.coffee"]
-    extensions: [".coffee"]
+    extensions: [".coffee", ".cjsx"]
     debug: !argv.production
-  .transform "coffeeify"
-  .transform "uglifyify"
-  .bundle()
-  .pipe plumber()
-  .pipe source "app.js"
-  .pipe gulp.dest "/opt/www/js"
+    transform: ["coffee-reactify"]
+
+  b.bundle()
+    .pipe source("app.js")
+    .pipe buffer()
+    .pipe sourcemaps.init { loadMaps: true }
+      .pipe uglify()
+      .on 'error', gutil.log
+    .pipe sourcemaps.write "./"
+    .pipe gulp.dest "/opt/www/js"
 
 
 gulp.task "css", () ->
