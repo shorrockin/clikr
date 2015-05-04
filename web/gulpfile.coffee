@@ -1,13 +1,15 @@
 'use strict';
 
-gulp       = require 'gulp'
-gp         = (require 'gulp-load-plugins') lazy: false
-path       = require 'path'
-browserify = require 'browserify'
-source     = require 'vinyl-source-stream'
-less       = require 'gulp-less'
-sync       = require 'browser-sync'
-argv       = require('yargs').argv
+gulp         = require 'gulp'
+path         = require 'path'
+plumber      = require 'gulp-plumber'
+browserify   = require 'browserify'
+source       = require 'vinyl-source-stream'
+less         = require 'gulp-less'
+sync         = require 'browser-sync'
+cssmin       = require 'gulp-cssmin'
+autoprefixer = require 'gulp-autoprefixer'
+argv         = require('yargs').argv
 
 
 gulp.task "default", ["css", "js", "images"]
@@ -26,22 +28,22 @@ gulp.task "watch", ["default"], () ->
 gulp.task "js", () ->
   browserify
     entries: ["/opt/src/coffee/app.coffee"]
-    extensions: [".coffee", ".js"]
+    extensions: [".coffee"]
     debug: !argv.production
   .transform "coffeeify"
-  .transform "deamdify"
   .transform "uglifyify"
   .bundle()
+  .pipe plumber()
   .pipe source "app.js"
   .pipe gulp.dest "/opt/www/js"
 
 
 gulp.task "css", () ->
   gulp.src '/opt/src/less/*.less'
-    .pipe gp.plumber()
+    .pipe plumber()
     .pipe less()
-    .pipe gp.cssmin keepSpecialComments: 0
-    .pipe gp.autoprefixer 'last 1 version'
+    .pipe cssmin(keepSpecialComments: 0)
+    .pipe autoprefixer('last 1 version')
     .pipe gulp.dest '/opt/www/css'
 
 
