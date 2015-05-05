@@ -10,9 +10,11 @@ module.exports = React.createClass
 
   componentDidMount: () ->
     sceneStore.addChangeListener(@onSceneChanged)
+    $("body").on "mouseup", @onMouseUp
 
   componentDidUnmount: () ->
     sceneStore.removeChangeListener(@onSceneChanged)
+    $("body").off "mouseup", @onMouseUp
 
   onSceneChanged: () ->
     @setState { frame: sceneStore.frame, max: episodeStore.frames() }
@@ -25,8 +27,9 @@ module.exports = React.createClass
     return (@scrubberWidth() * (@state.frame / @state.max)) - 10 # 10 is width of control
 
   onScrubberClick: (event) ->
-    offset = $(event.target).offset()
-    x      = Math.max(event.clientX - offset.left, 0)
+    offset = $(".scrubber").offset().left
+    x      = Math.max(event.clientX - offset, 0)
+    x      = Math.min(x, @scrubberWidth())
     perc   = (x / @scrubberWidth())
     frame  = (@state.max * perc)
 
@@ -39,13 +42,15 @@ module.exports = React.createClass
 
   onMouseDown: (event) ->
     @mouseDown = true
+    $("body").on "mousemove", @onMouseMove
     return
 
   onMouseUp: (event) ->
     @mouseDown = false
+    $("body").off "mousemove", @onMouseMove
     return
 
   render: () ->
-    <div className="scrubber" onClick={@onScrubberClick} onMouseMove={@onMouseMove} onMouseDown={@onMouseDown} onMouseUp={@onMouseUp} onMouseLeave={@onMouseUp}>
+    <div className="scrubber" onClick={@onScrubberClick} onMouseDown={@onMouseDown}>
       <div className="control" style={{left: "#{@controlPosition()}px"}}></div>
     </div>

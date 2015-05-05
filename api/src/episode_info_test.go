@@ -43,9 +43,8 @@ func TestEpisodeInfo(t *testing.T) {
 
 		// since we pass in seeded values here we can assert exact results
 		So(len(info), ShouldEqual, 4)
-		So(info[0].ObjectID, ShouldEqual, 68)
-		So(info[0].PositionX, ShouldEqual, 320)
-		So(info[1].PositionY, ShouldEqual, 159)
-		So(info[1].Size, ShouldEqual, 1)
+		So(info[0].PositionX, ShouldEqual, 408)
+		So(info[1].PositionY, ShouldEqual, 122)
+		So(info[2].Size, ShouldEqual, 3)
 	})
 }

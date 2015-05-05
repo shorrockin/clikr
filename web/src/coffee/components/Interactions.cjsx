@@ -23,7 +23,7 @@ module.exports = React.createClass
           when 2 then "medium"
           else "large"
 
-        <div className={size} style={{left: "#{interaction.x}px", top: "#{interaction.y}px" }}></div>
+        <div key={interaction.id} className={size} style={{left: "#{interaction.x}px", top: "#{interaction.y}px" }}></div>
 
       <div className="interactions">
         {interactions}

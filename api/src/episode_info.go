@@ -22,10 +22,10 @@ type SceneInfo struct {
 }
 
 type InteractionInfo struct {
-	ObjectID  int `json:"id"`
-	PositionX int `json:"x"`
-	PositionY int `json:"y"`
-	Size      int `json:"size"`
+	ObjectID  uint64 `json:"id"`
+	PositionX int    `json:"x"`
+	PositionY int    `json:"y"`
+	Size      int    `json:"size"`
 }
 
 func createInteractions(seed int64) []InteractionInfo {
@@ -35,7 +35,7 @@ func createInteractions(seed int64) []InteractionInfo {
 
 	for count := 0; count < amount; count++ {
 		arry[count] = InteractionInfo{
-			ObjectID:  r.Intn(100),
+			ObjectID:  NextId(),
 			PositionX: r.Intn(600) + 40,
 			PositionY: r.Intn(300) + 30,
 			Size:      r.Intn(3) + 1,
