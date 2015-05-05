@@ -20,7 +20,7 @@ func TestEpisodeInfo(t *testing.T) {
 
 	Convey("should be able to render the episode info as json", t, func() {
 		info := RetrieveEpisodeInfo(nil).(EpisodeInfo)
-		//info := EpisodeInfo{Slug: "new_girl"}
+
 		So(info, ShouldNotBeNil)
 		So(info.Slug, ShouldEqual, "new_girl")
 

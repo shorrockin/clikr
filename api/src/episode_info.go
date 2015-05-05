@@ -1,10 +1,6 @@
 package main
 
-import (
-	"math/rand"
-
-	"github.com/shorrockin/clikr/log"
-)
+import "math/rand"
 
 type EpisodeInfo struct {
 	Slug    string      `json:"slug"`
@@ -22,11 +18,22 @@ type SceneInfo struct {
 }
 
 type InteractionInfo struct {
-	ObjectID  uint64      `json:"id"`
-	PositionX int         `json:"x"`
-	PositionY int         `json:"y"`
-	Size      int         `json:"size"`
-	Object    SceneObject `json:"object"`
+	ObjectID  string       `json:"id"`
+	PositionX int          `json:"x"`
+	PositionY int          `json:"y"`
+	Size      int          `json:"size"`
+	Object    *SceneObject `json:"object"`
+}
+
+func randomSceneObject(r *rand.Rand) *SceneObject {
+	i := r.Intn(len(SceneObjects))
+	for _, v := range SceneObjects {
+		if i == 0 {
+			return v
+		}
+		i--
+	}
+	panic("RandomSceneObject hit unreachable point")
 }
 
 func createInteractions(seed int64) []InteractionInfo {
@@ -36,11 +43,11 @@ func createInteractions(seed int64) []InteractionInfo {
 
 	for count := 0; count < amount; count++ {
 		arry[count] = InteractionInfo{
-			ObjectID:  NextId(),
+			ObjectID:  string(NextId()),
 			PositionX: r.Intn(600) + 40,
 			PositionY: r.Intn(300) + 30,
 			Size:      r.Intn(3) + 1,
-			Object:    SceneObjects[r.Intn(len(SceneObjects)-1)],
+			Object:    randomSceneObject(r),
 		}
 	}
 
@@ -122,6 +129,5 @@ func init() {
 }
 
 func RetrieveEpisodeInfo(variables map[string]string) interface{} {
-	log.Debug("handling request to retrieve series information")
 	return newGirlEpisodeInfo
 }

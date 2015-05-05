@@ -11,10 +11,18 @@ import (
 
 func init() {
 	Map("GET", "/series/{series}/season/{season}/episode/{episode}", JsonEncoder(RetrieveEpisodeInfo))
+	Map("PUT", "/objects/{object_id}/click", JsonEncoder(RegisterObjectClick))
 }
 
 func Variables(request *http.Request) map[string]string {
-	return mux.Vars(request)
+	out := mux.Vars(request)
+
+	user := request.Header.Get("X-Clikr-User")
+	if user != "" {
+		out["X-Clikr-User"] = user
+	}
+
+	return out
 }
 
 func JsonEncoder(next func(map[string]string) interface{}) func(http.ResponseWriter, *http.Request) {

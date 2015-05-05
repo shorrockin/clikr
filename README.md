@@ -51,12 +51,14 @@ The api server (found in _/api_) is a simple go based server responding to a var
 | **Method** | GET |
 | **URL** | `/series/[series_slug]/season/[season_num]/episode/[episode_num]` |
 | **Description** | Retrieves the metadata about a given episode. Hypothetical at this point, server coded such that this will always return the same information regardless of what parameters are passed in. For this demo, this will be called on page load. |
+| **Returns** | A json structure containing the episode, all the scenes, all the interaction points within those scenes, and for each interaction point the object that can be interacted with. |
 
-| **Name** | Register Object Interest |
+| **Name** | Register Object Click |
 |------------:|:-----|
-| **Method** | POST |
-| **URL** | `/series/[series_slug]/season/[season_num]/episode/[episode_num]/scene/[scene_id]/object/[object_id]` |
-| **Description** | Used to register a 'click' on a specific object, in a specific scene. The scene_id and object_id must be valid scene and object identifiers as return by the _Get Scene Info_ call. This call must include a Http header named `X-Clikr-User` that is a unique identifier representing the user who made this call. For this demo the client just picks an identifier on boot to use, it then uses this to tie information together between calls.|
+| **Method** | PUT |
+| **URL** | `/object/[object_id]/click` |
+| **Description** | Used to register a _click_ on a specific object. The `object_id` must be valid object identifiers as return in the _Get Scene Info_ call. This call must include a Http header named `X-Clikr-User` that is a unique identifier representing the user who made this call. For this demo the client just picks an identifier on boot to use, it then uses this to tie information together between calls.|
+| **Returns** | An array containing the suggested objects that the user may enjoy based on the current bonds between objects. |
 
 # Concessions
 
@@ -69,3 +71,4 @@ The following lists the concessions made on this tech demo:
 1. Images should probably be minified in gulp build, instead just used image optim manually.
 1. Scene scrubber should show a preview of scene's as you scrub through them instead of loading them right away (see youtube).
 1. Images should be pre-loaded on boot. 
+1. In reality you probably wouldn't want multiple clicks to be registered over and over, but for testing it's useful to see how the object bond is increased with other objects as you do.
