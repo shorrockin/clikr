@@ -26,7 +26,7 @@ type InteractionInfo struct {
 	PositionX int         `json:"x"`
 	PositionY int         `json:"y"`
 	Size      int         `json:"size"`
-	Object    SceneObject `'json:"object"`
+	Object    SceneObject `json:"object"`
 }
 
 func createInteractions(seed int64) []InteractionInfo {
