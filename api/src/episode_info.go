@@ -22,10 +22,11 @@ type SceneInfo struct {
 }
 
 type InteractionInfo struct {
-	ObjectID  uint64 `json:"id"`
-	PositionX int    `json:"x"`
-	PositionY int    `json:"y"`
-	Size      int    `json:"size"`
+	ObjectID  uint64      `json:"id"`
+	PositionX int         `json:"x"`
+	PositionY int         `json:"y"`
+	Size      int         `json:"size"`
+	Object    SceneObject `'json:"object"`
 }
 
 func createInteractions(seed int64) []InteractionInfo {
@@ -39,16 +40,18 @@ func createInteractions(seed int64) []InteractionInfo {
 			PositionX: r.Intn(600) + 40,
 			PositionY: r.Intn(300) + 30,
 			Size:      r.Intn(3) + 1,
+			Object:    SceneObjects[r.Intn(len(SceneObjects)-1)],
 		}
 	}
 
 	return arry
 }
 
-func RetrieveEpisodeInfo(variables map[string]string) interface{} {
-	log.Debug("handling request to retrieve series information")
+// used to store the static test data
+var newGirlEpisodeInfo EpisodeInfo
 
-	return EpisodeInfo{
+func init() {
+	newGirlEpisodeInfo = EpisodeInfo{
 		Slug:    "new_girl",
 		Name:    "New Girl",
 		Episode: 21,
@@ -116,5 +119,9 @@ func RetrieveEpisodeInfo(variables map[string]string) interface{} {
 			{Frame: 27313, Image: "/images/new_girl/s4e21/scene27313.jpeg", Interactions: createInteractions(27313)},
 		},
 	}
+}
 
+func RetrieveEpisodeInfo(variables map[string]string) interface{} {
+	log.Debug("handling request to retrieve series information")
+	return newGirlEpisodeInfo
 }

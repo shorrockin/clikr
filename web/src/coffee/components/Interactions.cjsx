@@ -1,6 +1,19 @@
 React        = require "react"
 episodeStore = require "../stores/episodeStore"
 sceneStore   = require "../stores/sceneStore"
+actions      = require "../actions"
+
+InteractionElement = React.createClass
+  onClick: () ->
+    actions.clickInteraction @props.data
+
+  render: () ->
+    size = switch @props.data.size
+      when 1 then "small"
+      when 2 then "medium"
+      else "large"
+    <div onClick={@onClick} className={size} style={{left: "#{@props.data.x}px", top: "#{@props.data.y}px" }}></div>
+
 
 module.exports = React.createClass
   getInitialState: () ->
@@ -18,12 +31,7 @@ module.exports = React.createClass
   render: () ->
     if @state.interactions?
       interactions = @state.interactions.map (interaction) ->
-        size = switch interaction.size
-          when 1 then "small"
-          when 2 then "medium"
-          else "large"
-
-        <div key={interaction.id} className={size} style={{left: "#{interaction.x}px", top: "#{interaction.y}px" }}></div>
+        <InteractionElement key={interaction.id} data={interaction} />
 
       <div className="interactions">
         {interactions}

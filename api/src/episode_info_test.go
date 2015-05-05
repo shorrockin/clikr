@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/shorrockin/clikr/log"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
@@ -39,12 +38,12 @@ func TestEpisodeInfo(t *testing.T) {
 
 	Convey("should be able to generate random interafction info", t, func() {
 		info := createInteractions(100)
-		log.Debug("created %v", info)
+		// log.Debug("created %v", info)
 
 		// since we pass in seeded values here we can assert exact results
 		So(len(info), ShouldEqual, 4)
 		So(info[0].PositionX, ShouldEqual, 408)
-		So(info[1].PositionY, ShouldEqual, 122)
-		So(info[2].Size, ShouldEqual, 3)
+		So(info[1].PositionY, ShouldEqual, 79)
+		So(info[2].Size, ShouldEqual, 1)
 	})
 }

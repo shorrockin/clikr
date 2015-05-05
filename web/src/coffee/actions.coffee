@@ -12,9 +12,13 @@ module.exports = {
         actionType: "episode-loaded"
         episode: result.body
 
-
   visitFrame: (frame) ->
     dispatcher.dispatch
       actionType: "visit-frame"
       frame: frame
+
+  clickInteraction: (interaction) ->
+    dispatcher.dispatch
+      actionType: "click-interaction"
+      interaction: interaction
 }
