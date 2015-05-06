@@ -29,13 +29,59 @@ The app uses the following tech:
 
 This section will outline how to quickly get the servers up and running using docker. If you just want to run the app and not worry about developing this is your fastest way to get things up and running.
 
-TODO
+Because this utilizes docker, that will be a pre-requisite for this section. To install docker please check out their [installation instructions](https://docs.docker.com/installation/).
+
+Once you installed docker, and confirmed that it's functional (if using OSX, I recommend using Boot2Docker), you can do the following to download and run the Clikr images:
+
+`> docker run --rm --name api shorrockin/clikr_api`
+
+This will download everything needed (os, binaries, code - so it may take a bit the first time) needed to run the clikr golang based api server. It will run it within this container and bind to port 3000 inside the container. We do not need to expose the api port to our host machine, since we're going to link our containers together.
+
+The `--rm` parameter indicates that we want this container removed once it finishes. 
+
+We name this container `api` using the `--name` parameter. We'll then reference this name when we run our web server:
+
+`> docker run --rm --name web --link api:api -p 8080:80 shorrockin/clikr_web`
+
+Similar to before this will download everything we need to get the server up and running. This also does 2 other things. 
+
+The `--link` command makes our api server available within our web server. Our nginx server then acts as a reverse proxy to our api server sending it requests prefixed with `/api`.
+
+The `-p` command exposes our nginx port to our host machine. In this example we've bound it to `8080`, but you're welcome to bind to whatever you wish. You should now be able to visit the demo at [http://localhost:8080](http://localhost:8080) (modifying the port if you didn't use 8080.
+
+**Note** If you're using Boot2Docker, your server will not be available on localhost. You'll need to access it by the IP returned by `boot2docker shellinit`.
 
 ## Developing
 
 Looking to play around with code? This section outlines how to get the dev environment up and running. 
 
-TODO
+The dev setup for this project makes liberal use of _doing stuff on save_, this involves running our test suite, compiling our go code, restarting servers, compiling our less to css, etc. All this happens automatically on save. With that in mind, Boot2Docker (at the time of writing) is not up to the task for this as a mounted NFS drive will not trigger the file system events necessary to detect file changes.
+
+For development we utilize [Vagrant](https://www.vagrantup.com/) to build a small Ubuntu server that we run docker within. Instead of using a mounted NFS drive we use `vagrant rsync-auto` to copy our changes to our vagrant box. This section assumes some familiarity with Vagrant, and as such will not walk you through everything.
+
+To get started, build our Vagrant instance with:
+
+`> vagrant up`
+
+Once you have your vagrant instance running, you you can copy the changes from your host box to the vagrant box with `vagrant rsync-auto`
+
+Now you're ready to start developing. `ssh` to your vagrant box and `cd` to the clikr directory. From here you can build all the docker containers we use in dev. We use [docker compose](https://docs.docker.com/compose/) in development to orchestrate building the dev containers, and setting up the shared resources between them. In dev mode we build the following containers:
+
+* **gulp**: [gulp](http://gulpjs.com/) based build system to automatically watch for changes and build our coffeescript and less files into javascript and css. shares a file volume with the _web_ container so it can serve out the most up to date files.
+* **web**: our nginx web server which serves our html, css and js. Also acts as a remote proxy for our _api_ server for any request starting with `/api`
+* **api**: our go based api server. Responds to api requests, more details on the api routes available is documented below.
+* **test**: our automatic test server which uses [goconvey](http://goconvey.co/) to automatically run and report on the status of tests to our browser. shares a file system with our _api_ server. 
+
+To build all these containers you can use the `./bin/build` script, which is simply a shortcut for:
+
+`> docker-compose build`
+
+Then start them all up together the `./bin/dev` script, which does:
+
+`> docker-compose up`
+
+Once you have all the containers running, you should be able to access the web server on port `8080`, the go-convey test results on port `9090` and the api server on `3000`. These port mappings are defined in the main `Vagrantfile`. 
+
 
 # Architecture
 
@@ -72,3 +118,4 @@ The following lists the concessions made on this tech demo:
 1. Scene scrubber should show a preview of scene's as you scrub through them instead of loading them right away (see youtube).
 1. Images should be pre-loaded on boot. 
 1. In reality you probably wouldn't want multiple clicks to be registered over and over, but for testing it's useful to see how the object bond is increased with other objects as you do.
+1. Tons of other UI improvements could be made. But all tech demos need to stop at some point. 
