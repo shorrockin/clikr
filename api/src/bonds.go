@@ -81,14 +81,13 @@ func RegisterObjectClick(variables map[string]string) interface{} {
 	objectId := variables["object_id"]
 	userId := variables["X-Clikr-User"]
 
-	log.Debug("accessed with variables: %v", variables)
-	log.Debug("user '%v' attempting to register object '%v'", userId, objectId)
-
 	sceneObject, ok := SceneObjects[objectId]
 	if !ok {
 		log.Warn("attempt to register object click with invalid object id: '%v'", objectId)
 		return []*SceneObject{}
 	}
+
+	log.Debug("user '%v' register click on object '%v:%v'", userId, sceneObject.Name, objectId)
 
 	// mark the object as liked for this user, will strength bond between other
 	// liked objects.
@@ -105,6 +104,7 @@ func RegisterObjectClick(variables map[string]string) interface{} {
 	out := make([]*SceneObject, size, size)
 
 	for i, b := range bonds {
+		log.Debug("recommending '%v' with bond strength '%v'", b.With.Name, b.Strength)
 		out[i] = b.With
 		if i == (maxSize - 1) {
 			break

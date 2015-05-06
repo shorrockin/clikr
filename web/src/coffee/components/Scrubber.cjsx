@@ -43,11 +43,13 @@ module.exports = React.createClass
   onMouseDown: (event) ->
     @mouseDown = true
     $("body").on "mousemove", @onMouseMove
+    $("body").css("user-select", "none")
     return
 
   onMouseUp: (event) ->
     @mouseDown = false
     $("body").off "mousemove", @onMouseMove
+    $("body").css("user-select", "")
     return
 
   render: () ->

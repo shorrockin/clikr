@@ -37,4 +37,4 @@ module.exports = React.createClass
         {interactions}
       </div>
     else
-      <div className="interactions"/>
+      return null

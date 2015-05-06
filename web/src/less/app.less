@@ -80,7 +80,6 @@ section.scene {
     img, div.img {
         border-top-left-radius: 0.25em;
         border-top-right-radius: 0.25em;
-        user-select: none;
         width: @image-width;
         height: @image-height;
         background: @light-grey;
@@ -107,7 +106,6 @@ section.scene {
             top: -3px; /* accounts for border width */
             left: 0px;
             pointer-events: none;
-            user-select: none;
         }
 
         div.control::after {
@@ -173,5 +171,27 @@ section.object-info {
 
     p {
         text-align: justify;
+    }
+
+    a.close {
+        float: right;
+        color: @light-grey;
+        font-weight: bolder;
+        text-decoration: none; 
+        margin-right: 0.2em;
+    }
+
+    a.close:hover {
+        color: darken(@light-grey, 40%);
+    }
+
+
+    div.recommendations {
+        border-top: 1px @light-grey solid;
+
+        h2 {
+            color: @grey;
+            font-size: 1.1em;
+        }
     }
 }

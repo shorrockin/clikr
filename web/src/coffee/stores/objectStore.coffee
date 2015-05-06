@@ -7,6 +7,10 @@ class ObjectStore extends ReactStore
       switch payload.actionType
         when "click-interaction"
           @object = payload.interaction.object
+          @object.recommendations = payload.recommendations
+          @changed()
+        when "clear-object"
+          @object = null
           @changed()
 
 module.exports = new ObjectStore()
